@@ -16,16 +16,16 @@ async function fetchingDataFromWebsite() {
   return await response.json();
 }
 
-function checkFileExist() {
+async function checkFileExist() {
   if (!fs.existsSync(filename)) {
-    const book = fetchingDataFromWebsite();
+    const book = await fetchingDataFromWebsite();
     writeToFile(book);
   } else {
     console.log(`File exist ${filename}`);
   }
 }
 
-async function getAllBook() {
+function getAllBook() {
   checkFileExist()
 }
 
