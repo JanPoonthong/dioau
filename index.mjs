@@ -11,7 +11,9 @@ function writeToFile(book) {
 }
 
 async function fetchingDataFromWebsite() {
-  const response = await fetch('https://librivox.org/api/feed/audiobooks?extended=1&format=json');
+  const response = await fetch('https://librivox.org/api/feed/audiobooks?extended=1&format=json').catch((err) => {
+    return console.log(err);
+  });
   console.log("Fethcing the data from website");
   return await response.json();
 }
