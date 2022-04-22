@@ -7,8 +7,7 @@ async function getAllBook() {
 }
 
 getAllBook().then((book) => {
-  console.log(typeof(book));
-  fs.writeFile("book", JSON.stringify(book), (err) => {
+  fs.writeFile("book.json", JSON.stringify(book), (err) => {
     if (err) return console.log(err);
     console.log("Successful");
   });
