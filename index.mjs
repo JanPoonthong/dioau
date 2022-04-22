@@ -3,13 +3,6 @@ import fs from "fs";
 
 const filename = "book.json";
 
-function readData() {
-  fs.readFile("book.json", "utf8", function (err, data) {
-    if (err) return console.log(err);
-    console.log(data);
-  });
-}
-
 function writeToFile(book) {
   fs.writeFile(filename, JSON.stringify(book), (err) => {
     if (err) return console.log(err);
@@ -39,7 +32,10 @@ async function checkFileExist() {
 
 function getAllBook() {
   if (checkFileExist()) {
-    readData();
+    fs.readFile("book.json", "utf8", function (err, data) {
+      if (err) return console.log(err);
+      console.log(data);
+    });
   }
 }
 
