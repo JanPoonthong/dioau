@@ -5,7 +5,7 @@ import fs from "fs";
 const filename = "book.json";
 
 var offset = 0;
-var limit = 50;
+var limit = 1000;
 
 async function writeToFile(book) {
   console.log(`Writing to ${filename}`);
@@ -24,11 +24,12 @@ async function fetchingDataFromWebsite() {
 
 async function checkFileExist() {
   if (!fs.existsSync(filename)) {
-    const book = await fetchingDataFromWebsite();
-    while (book.error !== "Audiobooks could not be found") {
+    while (true) {
       const book = await fetchingDataFromWebsite();
-      offset += 50;
-      limit += 50;
+      if (book.error === "Audiobooks could not be found") break;
+      console.log(book);
+      offset += 1000;
+      limit += 1000;
       await writeToFile(book);
     }
   } else {

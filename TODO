@@ -2,3 +2,17 @@
   and a way to resume where you stopped, and autoplay the next chapter.
 
 * You should save the data to a file so your program is faster when testing
+
+Writing to book.json
+Fetching the data from website
+undefined:1
+<br />
+^
+
+SyntaxError: Unexpected token < in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at Response.json (file:///C:/Users/janpo/Documents/Projects/dioau/node_modules/node-fetch/src/body.js:149:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async fetchingDataFromWebsite (file:///C:/Users/janpo/Documents/Projects/dioau/index.mjs:22:10)
+    at async checkFileExist (file:///C:/Users/janpo/Documents/Projects/dioau/index.mjs:28:20)
+    at async getAllBook (file:///C:/Users/janpo/Documents/Projects/dioau/index.mjs:42:7)
