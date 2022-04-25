@@ -3,9 +3,10 @@ import fetch from "node-fetch";
 import fs from "fs";
 
 const filename = "book.json";
+const HTMLfile = "book.html"
 
 var offset = 0;
-var limit = 1000;
+var limit = 420;
 
 async function writeToFile(book) {
   console.log(`Writing to ${filename}`);
@@ -19,17 +20,20 @@ async function fetchingDataFromWebsite() {
     return console.log(err);
   });
   console.log("Fetching the data from website");
-  return await response.json();
+  console.log(`https://librivox.org/api/feed/audiobooks?format=json&offset=${offset}&limit=${limit}`)
+  console.log(`Reponse status: ${response.status}`);
+  // console.log(await response.text());
+  return await response.text();
 }
 
 async function checkFileExist() {
   if (!fs.existsSync(filename)) {
     while (true) {
       const book = await fetchingDataFromWebsite();
-      if (book.error === "Audiobooks could not be found") break;
+      if (book.error === "Audiobooks could not be found") process.exit(1);
       console.log(book);
-      offset += 1000;
-      limit += 1000;
+      offset += 420;
+      limit += 420;
       await writeToFile(book);
     }
   } else {
