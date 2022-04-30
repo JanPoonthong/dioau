@@ -3,14 +3,16 @@ import fetch from "node-fetch";
 import fs from "fs";
 
 const filename = "book.json";
-const HTMLfile = "book.html"
+const HTMLfile = "book.html";
 
 var offset = 0;
 var limit = 50;
 
-async function writeToFile(book) {
-  console.log(`Writing to ${filename}`);
-  await fsPromises.writeFile(filename, JSON.stringify(book), "utf-8");
+async function appendToFile(book) {
+  await fs.appendFile(filename, JSON.stringify(book), function (err) {
+    if (err) throw err;
+    console.log("Saved!");
+  });
 }
 
 async function fetchingDataFromWebsite() {
@@ -20,7 +22,9 @@ async function fetchingDataFromWebsite() {
     return console.log(err);
   });
   console.log("Fetching the data from website");
-  console.log(`https://librivox.org/api/feed/audiobooks?format=json&offset=${offset}&limit=${limit}`)
+  console.log(
+    `https://librivox.org/api/feed/audiobooks?format=json&offset=${offset}&limit=${limit}`
+  );
   console.log(`Reponse status: ${response.status}`);
   return await response.json();
 }
@@ -30,11 +34,11 @@ async function checkFileExist() {
     while (true) {
       const book = await fetchingDataFromWebsite();
       if (book.error === "Audiobooks could not be found") break;
-      console.log(book);
+      console.log(JSON.stringify(book));
       console.log(book.error === "Audiobooks could not be found");
       offset += 50;
       limit += 50;
-      await writeToFile(book);
+      await appendToFile(book);
     }
   } else {
     console.log(`File exist ${filename}`);
